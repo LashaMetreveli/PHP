@@ -6,35 +6,36 @@ use Illuminate\Http\Request;
 
 class PageController extends Controller
 {
-    public function getGomePage()
+    public function getHomePage()
     {
         $title = 'HOME';
-        return view('content-page')
-            ->with('test_title', $title)
-            ->with('color', "green")
-            ->with('text', "This is home page from content-page component")
-            ->with('show_button', true);
+        return view('content')
+            ->with('title', $title)
+            ->with('theme', "dark")
+            ->with('footerText', "This is footer inside home")
+            ->with('show_footer', true);
     }
 
-    public function getContactPage()
+    public function getOrderPage()
     {
-        $title = 'CONTACT';
+        $title = 'ORDER';
 
-        return view('content-page')
-            ->with('test_title', $title)
-            ->with('color', "red")
-            ->with('text', "This is contact page from content-page component")
-            ->with('show_button', true);
+        return view('content')
+            ->with('title',)
+            ->with('theme', "light")
+            ->with('footerText', "This is footer inside order")
+            ->with('show_footer', true);
     }
+
 
     public function getAboutPage()
     {
         $title = 'ABOUT';
 
-        return view('content-page')
-            ->with('test_title', $title)
-            ->with('color', "blue")
-            ->with('text', "This is about page from content-page component")
-            ->with('show_button', false);
+        return view('content')
+            ->with('title', $title)
+            ->with('theme', "dark")
+            ->with('footerText', "This is footer inside about")
+            ->with('show_footer', false);
     }
 }
