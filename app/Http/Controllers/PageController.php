@@ -21,7 +21,7 @@ class PageController extends Controller
         $title = 'ORDER';
 
         return view('content')
-            ->with('title',)
+            ->with('title', '')
             ->with('theme', "light")
             ->with('footerText', "This is footer inside order")
             ->with('show_footer', true);
