@@ -3,20 +3,28 @@
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 
-// Route::get('/', '\App\Http\Controllers\PageController@getGomePage');
-// Route::get('/home', '\App\Http\Controllers\PageController@getGomePage');
-// Route::get('/contact', '\App\Http\Controllers\PageController@getContactPage');
-// Route::get('/about', '\App\Http\Controllers\PageController@getAboutPage');
-
-Route::get('add-product', function () {
-    Product::create([
-        'name' => 'Laptop2',
-        'price' => 800,
-        'category' => "laptops"
-    ]);
-});
+// Route::get('add-product', function () {
+//     Product::create([
+//         'name' => 'Laptop2',
+//         'price' => 800,
+//         'category' => "laptops"
+//     ]);
+// });
 
 
-Route::get('product/create', '\App\Http\Controllers\ProductController@createProduct');
-Route::get('products', '\App\Http\Controllers\ProductController@viewAllProducts');
-Route::post('product/add', '\App\Http\Controllers\ProductController@addNewProduct');
+Route::get('products', '\App\Http\Controllers\ProductController@viewAllProducts')->name('product.all');
+Route::post('product/add', '\App\Http\Controllers\ProductController@addNewProduct')->name('product.add');
+Route::post('product/delete', '\App\Http\Controllers\ProductController@deleteProduct')->name('product.delete');
+Route::get('product/edit/{id}', '\App\Http\Controllers\ProductController@editProduct')->name('product.edit');
+Route::post('product/update/{id}', '\App\Http\Controllers\ProductController@updateProduct')->name('product.update');
+
+// Route::get('test', function () {
+//     foreach (range(0, 500) as $r) {
+//         Product::create([
+//             'name' => 'product ' . uniqid() . ' ' . $r,
+//             'price' => rand(1000, 5000),
+//             'category' => 'laptop',
+
+//         ]);
+//     }
+// });
