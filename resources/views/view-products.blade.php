@@ -18,11 +18,11 @@
                     <form action="{{route('product.all')}}">
     
                     <tr>
-                    <td><input class="form-control" type="number" name="id" placeholder="id" value="{{$filters['id']}}"></td>
-                        <td colspan><input class="form-control" type="text" name="name" placeholder="name" value="{{$filters['name']}}"></td>
-                        <td><input class="form-control" type="number" name="minprice" placeholder="min price" value="{{$filters['minprice']}}"></td>
-                        <td><input class="form-control" type="number" name="maxprice" placeholder="max price" value="{{$filters['maxprice']}}"></td>
-                        <td><input class="form-control" type="text" name="category" placeholder="category" value="{{$filters['category']}}"></td>
+                    <td><input class="form-control" type="number" name="id" placeholder="id" value="{{request('id')}}"></td>
+                        <td colspan><input class="form-control" type="text" name="name" placeholder="name" value="{{request('name')}}"></td>
+                        <td><input class="form-control" type="number" name="minprice" placeholder="min price" value="{{request('minprice')}}"></td>
+                        <td><input class="form-control" type="number" name="maxprice" placeholder="max price" value="{{request('maxprice')}}"></td>
+                        <td><input class="form-control" type="text" name="category" placeholder="category" value="{{request('category')}}"></td>
                         <td colspan="3"><button class="btn btn-info">Filter</button></td>
             
                     </tr>

@@ -20,62 +20,37 @@ class ProductController extends Controller
         return $product;
     }
 
+
+    private function filter($products)
+    {
+        return $products->when(request('id'), function ($q) {
+            $q->where('id', request()->id);
+        })
+            ->when(request('name'), function ($q) {
+                $q->where('name', 'LIKE', '%' . request()->name . '%');
+            })
+            ->when(request('minprice'), function ($q) {
+                $q->where('price', '>=', request()->minprice);
+            })
+            ->when(request('maxprice'), function ($q) {
+                $q->where('price', '<=', request()->maxprice);
+            })
+            ->when(request('category'), function ($q) {
+                $q->where('category', request()->category);
+            });
+    }
+
+
     public function viewAllProducts(Request $request)
     {
         $products = Product::orderBy('price', 'ASC');
 
-        if ($request->id) {
-            $products->where(
-                'id',
-                $request->id
-            );
-        }
-
-        if ($request->name) {
-            $products->where(
-                'name',
-                'LIKE',
-                '%' . $request->name . '%'
-            );
-        }
-
-        if ($request->minprice) {
-            $products->where(
-                'price',
-                '>=',
-                $request->minprice
-            );
-        }
-
-
-        if ($request->maxprice) {
-            $products->where(
-                'price',
-                '<=',
-                $request->maxprice
-            );
-        }
-
-        if ($request->category) {
-            $products->where(
-                'category',
-                $request->category
-            );
-        }
-
+        $products = $this->filter($products);
 
         $products = $products->get();
 
-
         return view('view-products')
-            ->with('products', $products)->with('filters', [
-                'id' => $request->id,
-                'name' => $request->name,
-                'minprice' => $request->minprice,
-                'maxprice' => $request->maxprice,
-                'category' => $request->category,
-
-            ]);
+            ->with('products', $products);
     }
 
     public function addNewProduct(Request $request)
