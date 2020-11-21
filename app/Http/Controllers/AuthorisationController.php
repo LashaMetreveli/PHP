@@ -47,4 +47,10 @@ class AuthorisationController extends Controller
     {
         dd($request->all());
     }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        return redirect()->route('login');
+    }
 }
