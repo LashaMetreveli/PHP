@@ -4,12 +4,12 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
 
-Route::middleware('costum-auth')->name('product.')->group(function () {
-    Route::get('products', '\App\Http\Controllers\ProductController@viewAllProducts')->name('all');
-    Route::post('product/add', '\App\Http\Controllers\ProductController@addNewProduct')->name('add');
-    Route::post('product/delete', '\App\Http\Controllers\ProductController@deleteProduct')->name('delete');
-    Route::get('product/edit/{id}', '\App\Http\Controllers\ProductController@editProduct')->name('edit');
-    Route::post('product/update/{id}', '\App\Http\Controllers\ProductController@updateProduct')->name('update');
+Route::middleware('costum-auth')->prefix('products')->name('product.')->group(function () {
+    Route::get('/all', '\App\Http\Controllers\ProductController@viewAllProducts')->name('all');
+    Route::post('/add', '\App\Http\Controllers\ProductController@addNewProduct')->name('add');
+    Route::post('/delete', '\App\Http\Controllers\ProductController@deleteProduct')->name('delete');
+    Route::get('edit/{id}', '\App\Http\Controllers\ProductController@editProduct')->name('edit');
+    Route::post('/update/{id}', '\App\Http\Controllers\ProductController@updateProduct')->name('update');
 });
 
 
