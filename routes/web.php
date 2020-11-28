@@ -2,7 +2,20 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\PostController;
 
+
+
+Route::get('/front', function () {
+    return view('index');
+});
+
+// /admin/posts/create
+Route::middleware('costum-auth')->name('admin.')->prefix('admin')->group(function () {
+    Route::resource('/category', CategoryController::class);
+    Route::resource('/post', PostController::class);
+});
 
 Route::middleware('costum-auth')->prefix('products')->name('product.')->group(function () {
     Route::get('/all', '\App\Http\Controllers\ProductController@viewAllProducts')->name('all');
