@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Models\Post;
@@ -16,7 +17,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        return view('admin.post.index');
+        $posts = Post::all();
+
+        return view('admin.post.index')->with('posts', $posts);
     }
 
     /**
@@ -26,7 +29,9 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('admin.post.create');
+        $categories = Category::all();
+
+        return view('admin.post.create')->with('categories', $categories);
     }
 
     /**
@@ -38,24 +43,27 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => ['required', 'max:150', 'string'],
-            'text' => ['required', 'min:5'],
-            'image' => ['required', 'image']
+            'title' => ['required', 'min:5', 'max:150'],
+            'slug' => ['nullable', 'max:150'],
+            'text' => ['required'],
+            'image' => ['required', 'image'],
+            'category_id' => ['required', 'numeric'],
         ]);
 
-        $image = $request->file('image');
-        $filename = time() . $image->getClientOriginalName();
-        $image->move(public_path('/posts'), $filename);
+        $filename = $request->file('image')->getClientOriginalName();
+        $savedFileName = time() . '-' . $filename;
+        $request->file('image')->move(public_path('images'), $savedFileName);
+        $fileUrl = '/images/' . $savedFileName;
 
         Post::create([
             'title' => $request->title,
-            'image' => "/posts/$filename",
+            'slug' => Str::slug($request->slug ? $request->slug : $request->title),
+            'category_id' => $request->category_id,
             'text' => $request->text,
-            'category_id' => 1,
-            'slug' => Str::slug($request->title)
+            'image' => $fileUrl
         ]);
 
-        return redirect()->back();
+        return redirect()->route('admin.post.create');
     }
 
     /**
@@ -77,7 +85,10 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        return view('admin.post.edit');
+        $post = Post::where('id', $id)->first();
+        $categories = Category::all();
+
+        return view('admin.post.create')->with('post', $post)->with('categories', $categories);
     }
 
     /**
@@ -89,7 +100,32 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $post = Post::where('id', $id)->first();
+
+        $request->validate([
+            'title' => ['required', 'min:5', 'max:150'],
+            'slug' => ['nullable', 'max:150'],
+            'text' => ['required'],
+            'image' => ['nullable', 'image'],
+            'category_id' => ['required', 'numeric'],
+        ]);
+
+        if ($request->file('image')) {
+            $filename = $request->file('image')->getClientOriginalName();
+            $savedFileName = time() . '-' . $filename;
+            $request->file('image')->move(public_path('images'), $savedFileName);
+            $fileUrl = '/images/' . $savedFileName;
+
+            $post->image = $fileUrl;
+        }
+
+        $post->title = $request->title;
+        $post->slug = Str::slug($request->slug ? $request->slug : $request->title);
+        $post->category_id = $request->category_id;
+        $post->text = $request->text;
+        $post->save();
+
+        return redirect()->route('admin.post.edit', ['post' => $post->id]);
     }
 
     /**
@@ -100,6 +136,8 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Post::where('id', $id)->delete();
+
+        return redirect()->route('admin.post.index');
     }
 }

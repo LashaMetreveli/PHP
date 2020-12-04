@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use App\Models\Category;
 
 class CategoryController extends Controller
 {
@@ -15,17 +16,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return view('admin.category.index');
-    }
+        $cateories = Category::all();
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view('admin.category.create');
+        return view('admin.category.index')->with('categories', $cateories);
     }
 
     /**
@@ -36,18 +29,16 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $request->validate([
+            'name' => ['required', 'min:2', 'max:100'],
+        ]);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        Category::create([
+            'name' => $request->name,
+            'slug' => Str::slug($request->name)
+        ]);
+
+        return redirect()->route('admin.category.index');
     }
 
     /**
@@ -58,7 +49,9 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        return view('admin.category.edit');
+        $category = Category::where('id', $id)->first();
+
+        return view('admin.category.edit')->with('category', $category);
     }
 
     /**
@@ -70,7 +63,16 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name' => ['required', 'min:2', 'max:100']
+        ]);
+
+        Category::where('id', $id)->update([
+            'name' => $request->name,
+            'slug' => Str::slug($request->name),
+        ]);
+
+        return redirect()->route('admin.category.index');
     }
 
     /**
@@ -81,6 +83,8 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Category::where('id', $id)->delete();
+
+        return redirect()->route('admin.category.index');
     }
 }

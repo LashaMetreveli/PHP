@@ -4,18 +4,19 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\PostController;
+use App\Http\Controllers\HomeController;
 
-
-
-Route::get('/front', function () {
-    return view('index');
+Route::name('front.')->group(function () {
+    Route::get('/', [HomeController::class, 'home'])->name('index');
+    Route::get('/post/{slug}', [HomeController::class, 'singlePost'])->name('post');
+    Route::get('/category/{slug}', [HomeController::class, 'singleCategory'])->name('category');
 });
 
-// /admin/posts/create
-Route::middleware('costum-auth')->name('admin.')->prefix('admin')->group(function () {
-    Route::resource('/category', CategoryController::class);
-    Route::resource('/post', PostController::class);
+Route::prefix('admin')->middleware('auth')->name('admin.')->group(function () {
+    Route::resource('/category', CategoryController::class)->except('show', 'create');
+    Route::resource('/post', PostController::class)->except('show');
 });
+
 
 Route::middleware('costum-auth')->prefix('products')->name('product.')->group(function () {
     Route::get('/all', '\App\Http\Controllers\ProductController@viewAllProducts')->name('all');
@@ -29,19 +30,19 @@ Route::middleware('costum-auth')->prefix('products')->name('product.')->group(fu
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::post('costum/register', [App\Http\Controllers\AuthorisationController::class, 'register'])->name(
-    'auth.costum.register'
+Route::post('custom/register', [App\Http\Controllers\AuthorisationController::class, 'register'])->name(
+    'auth.custom.register'
 )->middleware('guest');
-Route::post('costum/login', [App\Http\Controllers\AuthorisationController::class, 'login'])->name(
-    'auth.costum.login'
+Route::post('custom/login', [App\Http\Controllers\AuthorisationController::class, 'login'])->name(
+    'auth.custom.login'
 )->middleware('guest');
-Route::post('costum/reset', [App\Http\Controllers\AuthorisationController::class, 'reset'])->name(
-    'auth.costum.reset'
+Route::post('custom/reset', [App\Http\Controllers\AuthorisationController::class, 'reset'])->name(
+    'auth.custom.reset'
 )->middleware('guest');
-Route::post('costum/logout', [App\Http\Controllers\AuthorisationController::class, 'logout'])->name(
-    'auth.costum.logout'
+Route::post('custom/logout', [App\Http\Controllers\AuthorisationController::class, 'logout'])->name(
+    'auth.custom.logout'
 )->middleware('auth');
 
 

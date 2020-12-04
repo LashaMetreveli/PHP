@@ -2,27 +2,32 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Models\Post;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    public function home()
     {
-        $this->middleware('auth');
+        $posts = Post::with('category')->get();
+
+        return view('pages.index')->with('posts', $posts);
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    public function index()
+
+    public function singlePost($slug)
     {
-        return view('home');
+        $post = Post::where('slug', $slug)->with('category')->first();
+
+        return view('pages.post')->with('post', $post);
+    }
+
+    public function singleCategory($slug)
+    {
+        $category = Category::where('slug', $slug)->first();
+        $posts = Post::where('category_id', $category->id)->with('category')->get();
+
+        return view('pages.index')->with('posts', $posts);
     }
 }

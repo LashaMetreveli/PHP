@@ -23,10 +23,6 @@
         <a class="dropdown-item" href="{{ route('admin.category.index') }}">
             All Categories
         </a>
-        <a class="dropdown-item" href="{{ route('admin.category.create') }}">
-            Create Category
-        </a>
-    
     </div>
 </li>
 
@@ -39,13 +35,13 @@
     </a>
 
     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-        <a class="dropdown-item" href="{{ route('auth.costum.logout') }}"
+        <a class="dropdown-item" href="{{ route('auth.custom.logout') }}"
         onclick="event.preventDefault();
                         document.getElementById('logout-form').submit();">
             {{ __('Logout') }}
         </a>
 
-        <form id="logout-form" action="{{ route('auth.costum.logout') }}" method="POST" class="d-none">
+        <form id="logout-form" action="{{ route('auth.custom.logout') }}" method="POST" class="d-none">
             @csrf
         </form>
     </div>
