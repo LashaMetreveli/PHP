@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ConfigController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\HomeController;
 
@@ -15,6 +16,7 @@ Route::name('front.')->group(function () {
 Route::prefix('admin')->middleware('auth')->name('admin.')->group(function () {
     Route::resource('/category', CategoryController::class)->except('show', 'create');
     Route::resource('/post', PostController::class)->except('show');
+    Route::resource('/config', ConfigController::class)->except('show');
 });
 
 

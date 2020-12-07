@@ -15,7 +15,8 @@
 <body>
 
     <header>
-        @include('layouts.partials.menu')
+        <x-menu/>
+        {{-- @include('layouts.partials.menu') --}}
     </header>
 
     <main role="main">
