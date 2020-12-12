@@ -11,7 +11,8 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/app.js') }}" ></script>
+    {{-- <script src="{{ asset('jquery-3.2.1.slim.min.js') }}" ></script> --}}
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -68,5 +69,16 @@
         </main>
     </div>
 </body>
+
+<script>
+    $(document).ready(() => {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+            }
+        });
+    })
+
+</script>
 
 </html>

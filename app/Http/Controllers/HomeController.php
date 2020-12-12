@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
-use Illuminate\Http\Request;
 use App\Models\Post;
 
 class HomeController extends Controller
@@ -27,6 +26,10 @@ class HomeController extends Controller
     {
         $category = Category::where('slug', $slug)->first();
         $posts = Post::where('category_id', $category->id)->with('category')->get();
+
+        if (!$posts) {
+            abort(404);
+        }
 
         return view('pages.index')->with('posts', $posts);
     }

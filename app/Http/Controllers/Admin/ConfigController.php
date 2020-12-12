@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Config;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use App\Models\Category;
 
-class CategoryController extends Controller
+
+class ConfigController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,9 +17,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $cateories = Category::all();
+        $configs = Config::all();
 
-        return view('admin.category.index')->with('categories', $cateories);
+        return view('admin.config.index')->with('configs', $configs);
     }
 
     /**
@@ -30,15 +31,17 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => ['required', 'min:2', 'max:100'],
+            'key' => ['required', 'min:2', 'max:100'],
+            'value' => ['required', 'min:2', 'max:100'],
+
         ]);
 
-        Category::create([
-            'name' => $request->name,
-            'slug' => Str::slug($request->name)
+        Config::create([
+            'key' => $request->key,
+            'value' => $request->value,
         ]);
 
-        return  response()->json(['success' => true], 200);
+        return redirect()->route('admin.config.index');
     }
 
     /**
@@ -49,12 +52,9 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $category = Category::where('id', $id)->first();
-        $categories = Category::all();
+        $config = Config::where('id', $id)->first();
 
-        return view('admin.category.edit')
-            ->with('categories', $categories)
-            ->with('category', $category);
+        return view('admin.config.edit')->with('config', $config);
     }
 
     /**
@@ -67,15 +67,16 @@ class CategoryController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name' => ['required', 'min:2', 'max:100']
+            'key' => ['required', 'min:2', 'max:100'],
+            'value' => ['required', 'min:2', 'max:100'],
         ]);
 
-        Category::where('id', $id)->update([
-            'name' => $request->name,
-            'slug' => Str::slug($request->name),
+        Config::where('id', $id)->update([
+            'key' => ['required', 'min:2', 'max:100'],
+            'value' => ['required', 'min:2', 'max:100'],
         ]);
 
-        return response()->json([], 200);
+        return redirect()->route('admin.config.index');
     }
 
     /**
@@ -86,8 +87,8 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        Category::where('id', $id)->delete();
+        Config::where('id', $id)->delete();
 
-        return  response()->json(['success' => true], 200);
+        return redirect()->route('admin.config.index');
     }
 }

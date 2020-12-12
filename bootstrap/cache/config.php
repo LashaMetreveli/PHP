@@ -177,7 +177,7 @@
       'file' => 
       array (
         'driver' => 'file',
-        'path' => 'C:\\Users\\ratun\\Desktop\\PHP\\PHP\\storage\\framework/cache/data',
+        'path' => 'E:\\php\\PHP\\storage\\framework/cache/data',
       ),
       'memcached' => 
       array (
@@ -343,12 +343,12 @@
       'local' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\Users\\ratun\\Desktop\\PHP\\PHP\\storage\\app',
+        'root' => 'E:\\php\\PHP\\storage\\app',
       ),
       'public' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\Users\\ratun\\Desktop\\PHP\\PHP\\storage\\app/public',
+        'root' => 'E:\\php\\PHP\\storage\\app/public',
         'url' => 'http://localhost/storage',
         'visibility' => 'public',
       ),
@@ -365,7 +365,7 @@
     ),
     'links' => 
     array (
-      'C:\\Users\\ratun\\Desktop\\PHP\\PHP\\public\\storage' => 'C:\\Users\\ratun\\Desktop\\PHP\\PHP\\storage\\app/public',
+      'E:\\php\\PHP\\public\\storage' => 'E:\\php\\PHP\\storage\\app/public',
     ),
   ),
   'hashing' => 
@@ -399,13 +399,13 @@
       'single' => 
       array (
         'driver' => 'single',
-        'path' => 'C:\\Users\\ratun\\Desktop\\PHP\\PHP\\storage\\logs/laravel.log',
+        'path' => 'E:\\php\\PHP\\storage\\logs/laravel.log',
         'level' => 'debug',
       ),
       'daily' => 
       array (
         'driver' => 'daily',
-        'path' => 'C:\\Users\\ratun\\Desktop\\PHP\\PHP\\storage\\logs/laravel.log',
+        'path' => 'E:\\php\\PHP\\storage\\logs/laravel.log',
         'level' => 'debug',
         'days' => 14,
       ),
@@ -455,7 +455,7 @@
       ),
       'emergency' => 
       array (
-        'path' => 'C:\\Users\\ratun\\Desktop\\PHP\\PHP\\storage\\logs/laravel.log',
+        'path' => 'E:\\php\\PHP\\storage\\logs/laravel.log',
       ),
     ),
   ),
@@ -512,7 +512,7 @@
       'theme' => 'default',
       'paths' => 
       array (
-        0 => 'C:\\Users\\ratun\\Desktop\\PHP\\PHP\\resources\\views/vendor/mail',
+        0 => 'E:\\php\\PHP\\resources\\views/vendor/mail',
       ),
     ),
   ),
@@ -591,7 +591,7 @@
     'lifetime' => '120',
     'expire_on_close' => false,
     'encrypt' => false,
-    'files' => 'C:\\Users\\ratun\\Desktop\\PHP\\PHP\\storage\\framework/sessions',
+    'files' => 'E:\\php\\PHP\\storage\\framework/sessions',
     'connection' => NULL,
     'table' => 'sessions',
     'store' => NULL,
@@ -611,9 +611,9 @@
   array (
     'paths' => 
     array (
-      0 => 'C:\\Users\\ratun\\Desktop\\PHP\\PHP\\resources\\views',
+      0 => 'E:\\php\\PHP\\resources\\views',
     ),
-    'compiled' => 'C:\\Users\\ratun\\Desktop\\PHP\\PHP\\storage\\framework\\views',
+    'compiled' => 'E:\\php\\PHP\\storage\\framework\\views',
   ),
   'flare' => 
   array (
@@ -648,7 +648,7 @@
   'trustedproxy' => 
   array (
     'proxies' => NULL,
-    'headers' => 30,
+    'headers' => 94,
   ),
   'tinker' => 
   array (
