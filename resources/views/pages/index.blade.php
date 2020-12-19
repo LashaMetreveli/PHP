@@ -2,11 +2,11 @@
 
 @section('content')
     <div class="row">
-        @if (count($posts) == 0)
-            <div class="alert alert-warning text-center" style="width: 100%">No Posts Found</div>
+        @if (count($games) == 0)
+            <div class="alert alert-warning text-center" style="width: 100%">No Games Yet. C'mon Create Some</div>
         @else
-            @foreach ($posts as $post)
-                @include('components.post-card', ['post' => $post])
+            @foreach ($games as $game)
+                @include('components.game-card', ['game' => $game])
             @endforeach
         @endif
     </div>

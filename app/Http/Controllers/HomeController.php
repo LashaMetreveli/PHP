@@ -4,14 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Post;
+use App\Models\Game;
 
 class HomeController extends Controller
 {
     public function home()
     {
-        $posts = Post::with('category')->get();
+        $games = Game::with('category')->get();
 
-        return view('pages.index')->with('posts', $posts);
+
+        return view('pages.index')->with('games', $games);
     }
 
 
@@ -20,6 +22,13 @@ class HomeController extends Controller
         $post = Post::where('slug', $slug)->with('category')->first();
 
         return view('pages.post')->with('post', $post);
+    }
+
+    public function singleGame($slug)
+    {
+        $game = Game::where('slug', $slug)->with('category')->first();
+
+        return view('pages.game')->with('game', $game);
     }
 
     public function singleCategory($slug)

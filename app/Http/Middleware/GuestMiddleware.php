@@ -19,7 +19,7 @@ class GuestMiddleware
     public function handle(Request $request, Closure $next)
     {
         if (Auth::check()) {
-            return redirect()->route('home');
+            return redirect()->route('front.index');
         }
         return $next($request);
     }
